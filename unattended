@@ -1,0 +1,13 @@
+#!/bin/bash 
+
+# Never leave unattended terminals available
+# Depending on the linux version you may have to change the awk field to pull the correct column
+# that contains the process id of the open unattended shell(s)
+
+# add to cron tab
+# 5,20,35,50 * * * * /etc/unattened
+# this will run the script every 15 minutes, adjust to your policy
+
+# Tested on RHEL / Linux 3.10.0-957.12.2.el7.x86_64 your os may be different
+
+kill -1 `who -u | sed -e 's/./0/' -e 's/://' | awk '$5 > 15 {print $6}'`
